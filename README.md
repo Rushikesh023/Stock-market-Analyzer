@@ -1,42 +1,88 @@
-# Stock-market-Analyzer
-Our project is to analyze stock prices and current marke trend and scenario
-# 📊 Stock Market Analyzer  
+------------------------------------------------------------
 
-A simple C-based console application to manage and analyze stock data. This project allows users to add, view, and analyze stock information such as opening and closing prices. It demonstrates key programming concepts like **structures**, **linked lists**, and **basic data analysis** in C.  
+📘 Overview
+The Disaster Response Routing System is a C-based project that applies
+graph traversal algorithms (BFS and DFS) to identify safe and efficient
+evacuation routes during natural disasters such as floods, earthquakes,
+and landslides. The system models locations as graph nodes and routes
+as edges, enabling quick path discovery and reachability analysis.
 
----
+------------------------------------------------------------
 
-## 🧠 Project Overview  
+🎯 Objectives
+- Represent disaster-prone areas as graph nodes and roads as edges.
+- Implement BFS and DFS algorithms to find safe routes.
+- Compare traversal methods for speed and safety.
+- Demonstrate real-world use of graph algorithms in disaster management.
 
-The **Stock Market Analyzer** helps users store stock details (like company name, opening price, and closing price) and perform basic operations such as:  
-- Adding new stock records  
-- Displaying stock data  
-- Calculating profit or loss  
-- Finding the highest and lowest performing stocks  
+------------------------------------------------------------
 
-This mini-project is ideal for students learning **Data Structures in C**.  
+⚙️ System Requirements
+Hardware:
+- Processor: Intel i3 or higher
+- RAM: 2 GB minimum
+- Storage: 100 MB free
 
----
+Software:
+- OS: Windows
+- Compiler: GCC / VS Code
 
-## ⚙️ Features  
+------------------------------------------------------------
 
-- ➕ **Add New Stock** – Insert details for a company’s stock (name, opening price, closing price).  
-- 📋 **Display All Stocks** – View all stock entries in a structured format.  
-- 💹 **Profit/Loss Analysis** – Determine gain or loss for each stock.  
-- 🏆 **Top Performer** – Identify the stock with the maximum profit.  
-- 📉 **Lowest Performer** – Identify the stock with the highest loss.  
-- ❌ **Exit Option** – Gracefully terminate the program.  
+🧩 How It Works
+1. Input number of locations and routes.
+2. Build the adjacency matrix for the graph.
+3. Enter the starting location.
+4. Use BFS for shortest route discovery.
+5. Use DFS to explore all reachable paths.
+6. View safe routes and traversal order.
 
----
+------------------------------------------------------------
 
-## 🧩 Data Structure Used  
+💻 Sample Input / Output
 
-- **Structure (`struct`)** for storing stock details  
-- **Linked List** for dynamic data storage and traversal  
+Input:
+Enter number of locations: 4
+Enter adjacency matrix:
+0 1 1 0
+1 0 0 1
+1 0 0 1
+0 1 1 0
+Enter starting location: 0
 
-```c
-typedef struct Stock {
-    char name[50];
-    float open, close;
-    struct Stock *next;
-} Stock;
+Output:
+Using BFS: 0 1 2 3
+Using DFS: 0 1 3 2
+
+------------------------------------------------------------
+
+✅ Testing and Results
+Test Case 1: 4 nodes, connected → BFS: 0 1 2 3 → Pass
+Test Case 2: Sparse connectivity → Correct reachability → Pass
+Test Case 3: Isolated node → Shown as unreachable → Pass
+
+------------------------------------------------------------
+
+📈 Conclusion
+The system successfully applies BFS and DFS to real-world disaster
+management, offering a practical example of data structure applications.
+
+Future Enhancements:
+- Implement Dijkstra’s or A* algorithms for weighted graphs.
+- Integrate with GPS and real-time disaster data for smart city use.
+
+------------------------------------------------------------
+
+📚 References
+1. Tanaka, H. et al. “Graph-Based Route Optimization for Disaster
+   Evacuation Systems.” IEEE Transactions, 2024.
+2. Fei, J. & Li, M. “Efficient Pathfinding in Emergency Scenarios
+   using BFS/DFS.” arXiv, 2025.
+3. National Institute of Disaster Management, India.
+   “Computational Tools for Evacuation Planning,” 2023.
+
+
+
+
+
+
