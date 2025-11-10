@@ -1,110 +1,67 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#define MAX 100
 
-typedef struct Stock {
-    char name[50];
-    float open, close;
-    struct Stock *next;
-} Stock;
+int queue[MAX], front = -1, rear = -1;
+int visited[MAX];
 
-Stock *head = NULL;
-
-// Add new stock record
-void insertStock() {
-    char name[50];
-    float open, close;
-    printf("\nEnter stock name: ");
-    scanf("%s", name);
-    printf("Enter opening price: ");
-    scanf("%f", &open);
-    printf("Enter closing price: ");
-    scanf("%f", &close);
-
-    Stock *newStock = (Stock*)malloc(sizeof(Stock));
-    strcpy(newStock->name, name);
-    newStock->open = open;
-    newStock->close = close;
-    newStock->next = head;
-    head = newStock;
-
-    printf("\nStock added successfully!\n");
+void enqueue(int v) {
+    if (rear == MAX - 1) return;
+    if (front == -1) front = 0;
+    queue[++rear] = v;
 }
 
-// Display all records
-void displayStocks() {
-    if (head == NULL) {
-        printf("\nNo stock records found!\n");
-        return;
-    }
-    Stock *temp = head;
-    printf("\nStock Data:\n");
-    printf("-------------------------------\n");
-    while (temp != NULL) {
-        printf("%s - Opening: %.2f | Closing: %.2f\n", temp->name, temp->open, temp->close);
-        temp = temp->next;
-    }
-    printf("-------------------------------\n");
+int dequeue() {
+    if (front == -1 || front > rear) return -1;
+    return queue[front++];
 }
 
-// Find highest and lowest closing price
-void findHighLow() {
-    if (head == NULL) {
-        printf("\nNo records available!\n");
-        return;
+void BFS(int adj[MAX][MAX], int n, int start) {
+    for (int i = 0; i < n; i++) visited[i] = 0;
+    enqueue(start);
+    visited[start] = 1;
+
+    printf("BFS Traversal (Safe Routes): ");
+    while (front <= rear) {
+        int v = dequeue();
+        printf("%d ", v);
+        for (int i = 0; i < n; i++) {
+            if (adj[v][i] == 1 && !visited[i]) {
+                enqueue(i);
+                visited[i] = 1;
+            }
+        }
     }
-    float high = head->close, low = head->close;
-    Stock *temp = head;
-    while (temp != NULL) {
-        if (temp->close > high) high = temp->close;
-        if (temp->close < low) low = temp->close;
-        temp = temp->next;
-    }
-    printf("\nHighest Closing Price: %.2f\nLowest Closing Price: %.2f\n", high, low);
 }
 
-// Calculate average closing price
-void averagePrice() {
-    if (head == NULL) {
-        printf("\nNo records available!\n");
-        return;
+void DFS(int adj[MAX][MAX], int n, int start) {
+    visited[start] = 1;
+    printf("%d ", start);
+    for (int i = 0; i < n; i++) {
+        if (adj[start][i] == 1 && !visited[i])
+            DFS(adj, n, i);
     }
-    float sum = 0;
-    int count = 0;
-    Stock *temp = head;
-    while (temp != NULL) {
-        sum += temp->close;
-        count++;
-        temp = temp->next;
-    }
-    printf("\nAverage Closing Price: %.2f\n", sum / count);
 }
 
 int main() {
-    int choice;
+    int n, adj[MAX][MAX], start;
 
-    do {
-        printf("\n==============================");
-        printf("\n  STOCK MARKET ANALYZER MENU");
-        printf("\n==============================");
-        printf("\n1. Add Stock Record");
-        printf("\n2. Display All Stocks");
-        printf("\n3. Find Highest & Lowest Price");
-        printf("\n4. Calculate Average Price");
-        printf("\n5. Exit");
-        printf("\nEnter your choice: ");
-        scanf("%d", &choice);
+    printf("Enter number of locations: ");
+    scanf("%d", &n);
 
-        switch (choice) {
-            case 1: insertStock(); break;
-            case 2: displayStocks(); break;
-            case 3: findHighLow(); break;
-            case 4: averagePrice(); break;
-            case 5: printf("\nExiting program... Goodbye!\n"); break;
-            default: printf("\nInvalid choice! Try again.\n");
-        }
+    printf("Enter adjacency matrix (0 for no route, 1 for route):\n");
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            scanf("%d", &adj[i][j]);
 
-    } while (choice != 5);
+    printf("Enter starting location: ");
+    scanf("%d", &start);
+
+    printf("\nUsing BFS:\n");
+    BFS(adj, n, start);
+
+    for (int i = 0; i < n; i++) visited[i] = 0;
+    printf("\nUsing DFS:\n");
+    DFS(adj, n, start);
 
     return 0;
 }
